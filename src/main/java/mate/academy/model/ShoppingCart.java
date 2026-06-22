@@ -3,6 +3,8 @@ package mate.academy.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -15,8 +17,14 @@ public class ShoppingCart {
     @Id
     private Long id;
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "shopping_cart_tickets",
+            joinColumns = @JoinColumn(name = "shopping_cart_id"),
+            inverseJoinColumns = @JoinColumn(name = "tickets_cart_id")
+    )
     private List<Ticket> tickets;
     @MapsId
+    @JoinColumn(name = "user_id")
     @OneToOne(fetch = FetchType.LAZY)
     private User user;
 
